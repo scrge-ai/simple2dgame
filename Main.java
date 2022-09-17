@@ -4,6 +4,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 
+/*class Listener implements KeyListener{
+
+}*/
+
 public class Main extends JPanel implements KeyListener{
    int sqSize = 20;
    int size = 12;
@@ -11,32 +15,31 @@ public class Main extends JPanel implements KeyListener{
    int fences = 12;
    Game game = new Game(size, enemies, fences);
    static Main  mainPanel = new Main();
+   JLabel label;
 
    public Main(){
-        addKeyListener(this);
+      this.setFocusable(true);
+      addKeyListener(this);
    }
 
-    @Override
    public void keyTyped(KeyEvent e){
-    System.out.println("asjdnfajsdnf");
-    if(e.getKeyCode() == 38){
-        game.Update(1, 0);
-    }
-    repaint();
+      game.Update(1, 0);
+      repaint();
    }
 
-    @Override
    public void keyPressed(KeyEvent e){
     //call repaint here
-    System.out.println("alsdkf");
    }
-    @Override
+
    public void keyReleased(KeyEvent e){
-
+      
    }
 
-   public void draw(Graphics g) {
+   @Override
+   protected void paintComponent(Graphics g){
       super.paintComponent(g);
+      g.setColor(new Color(255, 255, 255));
+      g.drawRect(0, 0, 600, 600);
       for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(game.grid[i][j] == 0){
@@ -56,11 +59,6 @@ public class Main extends JPanel implements KeyListener{
       }
       //g.drawRect(10, 10, 100, 100);
       repaint();
-   }
-
-   @Override
-   protected void paintComponent(Graphics g){
-    draw(g);
    }
 
    @Override
