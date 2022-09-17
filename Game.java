@@ -1,0 +1,91 @@
+public class Game{
+	private int size;
+	private int fences;
+	private int enemies;
+	
+	public int[][] grid;
+	
+    public int[] enemy_x;
+    public int[] enemy_y;
+
+    public int player_x;
+    public int player_y;
+
+	public Boolean game_over = false;
+
+	public Game(int size, int fences, int enemies){
+		this.grid = new int[size][size];
+    	this.enemy_x = new int[enemies];
+		this.enemy_y = new int[enemies];
+
+        player_x = (int)(Math.random()*(size-2)+1);
+        player_y = (int)(Math.random()*(size-2)+1);
+
+        grid[player_x][player_y] = 1;
+		
+        for(int i = 0; i < size; i++){
+            grid[0][i] = 3;
+            grid[i][0] = 3;
+            grid[size-1][i] = 3;
+            grid[i][size-1] = 3;
+        }
+
+		for(int i = 0; i < enemies; i++){
+			enemy_x[i] = (int)(Math.random()*(size-2)+1);
+			enemy_y[i] = (int)(Math.random()*(size-2)+1);
+            //System.out.println(i);
+            while (enemy_x[i] == player_x && enemy_y[i] == player_y){
+                enemy_x[i] = (int)(Math.random()*(size-2)+1);
+                enemy_y[i] = (int)(Math.random()*(size-2)+1);
+            }
+            grid[enemy_x[i]][enemy_y[i]] = 2;
+		}
+	}
+	
+    public int getFences(){
+		return fences;
+    }
+      
+    public int setFences(){
+      	return fences;
+    }
+
+	public void Update(int movex, int movey){
+		player_x += movex;
+        player_y += movey;
+
+		for(int i = 0; i < enemies; i++){
+            if(enemy_x[i] != -1 && enemy_y[i] != -1){
+                int xdist = Math.abs(enemy_x[i]-player_x);
+                int ydist = Math.abs(enemy_y[i]-player_y);
+
+                if(xdist > ydist){
+                    if(enemy_x[i] < player_x) enemy_x[i]++;
+                    else enemy_x[i]--;
+                } else if(ydist > xdist){
+                    if(enemy_y[i] < player_x) enemy_y[i]++;
+                    else enemy_y[i]--;
+                } else{
+                    int dx = (enemy_x[i] < player_x) ? 1:-1;
+                    int dy = (enemy_y[i] < player_y) ? 1:-1;
+                    enemy_x[i] += dx;
+                    enemy_y[i] += dy;
+                }
+
+                if(grid[enemy_x[i]][enemy_y[i]] == 3){
+                    enemy_x[i] = -1;
+                    enemy_y[i] = -1;
+                } else{
+					grid[enemy_x[i]][enemy_y[i]] = 2;
+				}
+            }
+		}
+
+        if(grid[player_x][player_y] == 2 || grid[player_x][player_y] == 3){
+            // GAME OVER
+			game_over = true;
+        } else{
+			grid[player_x][player_y] = 1;
+		}
+	}
+}
