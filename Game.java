@@ -11,12 +11,17 @@ public class Game{
     public int player_x;
     public int player_y;
 
+    public int[] fence_x;
+    public int[] fence_y;
+
 	public Boolean game_over = false;
 
 	public Game(int size, int fences, int enemies){
 		this.grid = new int[size][size];
     	this.enemy_x = new int[enemies];
 		this.enemy_y = new int[enemies];
+        this.fence_x = new int[fences];
+        this.fence_y = new int[fences];
 
         player_x = (int)(Math.random()*(size-2)+1);
         player_y = (int)(Math.random()*(size-2)+1);
@@ -40,6 +45,16 @@ public class Game{
             }
             grid[enemy_x[i]][enemy_y[i]] = 2;
 		}
+
+        for(int i = 0; i < fences; i++){
+            fence_x[i] = (int)(Math.random()*size);
+            fence_y[i] = (int)(Math.random()*size);
+            while (fence_x[i] == player_x && fence_y[i] == player_y){
+                fence_x[i] = (int)(Math.random()*(size-2)+1);
+                fence_y[i] = (int)(Math.random()*(size-2)+1);
+            }
+            grid[fence_x[i]][fence_y[i]] = 3;
+        }
 	}
 	
     public int getFences(){
