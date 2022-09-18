@@ -23,15 +23,31 @@ public class Main extends JPanel implements KeyListener{
    }
 
    public void keyTyped(KeyEvent e){
-      System.out.println("u");
-      if(e.getKeyCode() == 87){
-         
-         game.Update(1, 0);
-      }
+
    }
 
    public void keyPressed(KeyEvent e){
-    //call repaint here
+      System.out.println(e.getKeyCode());
+      if(e.getKeyCode() == 87){
+         System.out.println("mememe");
+         game.Update(0, -1);
+         repaint();
+      }
+      if(e.getKeyCode() == 83){
+         System.out.println("mememe");
+         game.Update(0, 1);
+         repaint();
+      }
+      if(e.getKeyCode() == 68){
+         System.out.println("mememe");
+         game.Update(1, 0);
+         repaint();
+      }
+      if(e.getKeyCode() == 65){
+         System.out.println("mememe");
+         game.Update(-1, 0);
+         repaint();
+      }
    }
 
    public void keyReleased(KeyEvent e){
