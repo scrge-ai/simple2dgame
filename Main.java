@@ -12,7 +12,7 @@ public class Main extends JPanel implements KeyListener{
    int sqSize = 20;
    int size = 24;
    int enemies = 12;
-   int fences = 12;
+   int fences = 24;
    Game game = new Game(size, enemies, fences);
    static Main  mainPanel = new Main();
    JLabel label;
@@ -68,6 +68,10 @@ public class Main extends JPanel implements KeyListener{
          game.Update(1, -1);
          repaint();
       }
+
+      if(e.getKeyCode() == 82){
+         game = new Game(size, enemies, fences);
+      }
    }
 
    public void keyReleased(KeyEvent e){
@@ -98,7 +102,10 @@ public class Main extends JPanel implements KeyListener{
       }
 
       if(game.game_over){
-         
+         g.setColor(new Color(255, 0, 0));
+         g.fillRect(0, 0, 600, 600);
+         g.setColor(new Color(0, 0, 0));
+         g.drawString("GAME OVER", 200, 200);
       }
       //g.drawRect(10, 10, 100, 100);
       repaint();
