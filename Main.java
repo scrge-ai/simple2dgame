@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Main extends JPanel implements KeyListener{
    int sqSize = 20;
-   int size = 12;
+   int size = 24;
    int enemies = 12;
    int fences = 12;
    Game game = new Game(size, enemies, fences);
