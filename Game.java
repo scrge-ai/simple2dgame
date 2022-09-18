@@ -97,7 +97,7 @@ public class Game{
                     if(enemy_x[i] < player_x) enemy_x[i]++;
                     else enemy_x[i]--;
                 } else if(ydist > xdist){
-                    if(enemy_y[i] < player_x) enemy_y[i]++;
+                    if(enemy_y[i] < player_y) enemy_y[i]++;
                     else enemy_y[i]--;
                 } else{
                     int dx = (enemy_x[i] < player_x) ? 1:-1;

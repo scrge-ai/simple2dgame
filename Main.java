@@ -28,24 +28,44 @@ public class Main extends JPanel implements KeyListener{
 
    public void keyPressed(KeyEvent e){
       System.out.println(e.getKeyCode());
-      if(e.getKeyCode() == 87){
+      if(e.getKeyCode() == 87){ // w
          System.out.println("mememe");
          game.Update(0, -1);
          repaint();
       }
-      if(e.getKeyCode() == 83){
+      if(e.getKeyCode() == 83){ //s
          System.out.println("mememe");
-         game.Update(0, 1);
+         game.Update(0, 0);
          repaint();
       }
-      if(e.getKeyCode() == 68){
+      if(e.getKeyCode() == 68){ // d
          System.out.println("mememe");
          game.Update(1, 0);
          repaint();
       }
-      if(e.getKeyCode() == 65){
+      if(e.getKeyCode() == 65){ // a
          System.out.println("mememe");
          game.Update(-1, 0);
+         repaint();
+      }
+      if(e.getKeyCode() == 88){ //x
+         game.Update(0, 1);
+         repaint();
+      }
+      if(e.getKeyCode() == 90){ // z
+         game.Update(-1, 1);
+         repaint();
+      }
+      if(e.getKeyCode() == 67){ // c
+         game.Update(1, 1);
+         repaint();
+      }
+      if(e.getKeyCode() == 81){ // q
+         game.Update(-1, -1);
+         repaint();
+      }
+      if(e.getKeyCode() == 69){ // e
+         game.Update(1, -1);
          repaint();
       }
    }
@@ -75,6 +95,10 @@ public class Main extends JPanel implements KeyListener{
                 g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
             }
         }
+      }
+
+      if(game.game_over){
+         
       }
       //g.drawRect(10, 10, 100, 100);
       repaint();
