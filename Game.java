@@ -18,6 +18,10 @@ public class Game{
 	public Boolean game_over = false;
 
 	public Game(int size, int fences, int enemies){
+        this.fences = fences;
+        this.enemies = enemies;
+        this.size = size;
+
 		this.grid = new int[size][size];
         this.startgrid = new int[size][size];
     	this.enemy_x = new int[enemies];
@@ -41,23 +45,23 @@ public class Game{
             grid[i][size-1] = 3;
         }
 
-		for(int i = 0; i < enemies; i++){
-			enemy_x[i] = (int)(Math.random()*(size-2)+1);
-			enemy_y[i] = (int)(Math.random()*(size-2)+1);
+		for(int i = 0; i < this.enemies; i++){
+			enemy_x[i] = 1+  (int)(Math.random()*(size-2));
+			enemy_y[i] = 1 + (int)(Math.random()*(size-2));
             //System.out.println(i);
             while (enemy_x[i] == player_x && enemy_y[i] == player_y){
-                enemy_x[i] = (int)(Math.random()*(size-2)+1);
-                enemy_y[i] = (int)(Math.random()*(size-2)+1);
+                enemy_x[i] = 1 + (int)(Math.random()*(size-2));
+                enemy_y[i] = 1 + (int)(Math.random()*(size-2));
             }
             grid[enemy_x[i]][enemy_y[i]] = 2;
 		}
 
-        for(int i = 0; i < fences; i++){
-            fence_x[i] = (int)(Math.random()*size);
-            fence_y[i] = (int)(Math.random()*size);
+        for(int i = 0; i < this.fences; i++){
+            fence_x[i] = 1 + (int)(Math.random()*(size-2));
+            fence_y[i] = 1 + (int)(Math.random()*(size-2));
             while (fence_x[i] == player_x && fence_y[i] == player_y){
-                fence_x[i] = (int)(Math.random()*(size-2)+1);
-                fence_y[i] = (int)(Math.random()*(size-2)+1);
+                fence_x[i] = 1 + (int)(Math.random()*(size-2));
+                fence_y[i] = 1 + (int)(Math.random()*(size-2));
             }
             startgrid[fence_x[i]][fence_y[i]] = 3;
             grid[fence_x[i]][fence_y[i]] = 3;
@@ -83,9 +87,9 @@ public class Game{
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid.length; j++){
                 newgrid[i][j] = startgrid[i][j];
-                System.out.print(newgrid[i][j]);
+                //System.out.print(newgrid[i][j]);
             }
-            System.out.println();
+            //System.out.println();
         }
 
 		for(int i = 0; i < enemy_x.length; i++){

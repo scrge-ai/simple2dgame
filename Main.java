@@ -3,19 +3,41 @@ import java.awt.Graphics;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 /*class Listener implements KeyListener{
 
 }*/
 
 public class Main extends JPanel implements KeyListener{
-   int sqSize = 20;
-   int size = 24;
+   int sqSize = 50;
+   int size = 12;
    int enemies = 12;
-   int fences = 24;
+   int fences = 12;
    Game game = new Game(size, enemies, fences);
    static Main  mainPanel = new Main();
    JLabel label;
+
+   BufferedImage player = ImageIO.read(imageSrc);
+   int w = player.getWidth(null);
+   int h = player.getHeight(null);
+   BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+   Graphics g_player = bi.getGraphics();
+
+   BufferedImage enemy = ImageIO.read(imageSrc);
+   w = enemy.getWidth(null);
+   h = enemy.getHeight(null);
+   BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+   Graphics g_enemy = bi.getGraphics();
+
+   BufferedImage fence = ImageIO.read(imageSrc);
+   w = fence.getWidth(null);
+   h = fence.getHeight(null);
+   BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+   Graphics g_fence = bi.getGraphics();
+
+   //BufferedImage enemy = new 
 
    public Main(){
       this.setFocusable(true);
@@ -91,12 +113,15 @@ public class Main extends JPanel implements KeyListener{
             } else if(game.grid[i][j] == 1){
                 g.setColor(new Color(0, 255, 0));
                 g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
+                g.drawImage(player, i*sqSize, j*sqSize, null);
             } else if(game.grid[i][j] == 2){
                 g.setColor(new Color(255, 0, 0));
                 g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
+                g.drawImage(enemy, i*sqSize, j*sqSize, null);
             } else if(game.grid[i][j] == 3){
                 g.setColor(new Color(0, 0, 0));
                 g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
+                g.drawImage(fence, i*sqSize, j*sqSize, null);
             }
         }
       }
