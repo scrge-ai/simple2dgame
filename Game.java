@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Game{
 	private int size;
 	private int fences;
@@ -15,6 +17,14 @@ public class Game{
     public int[] fence_x;
     public int[] fence_y;
 
+    public List<int[][]> memory;
+
+    public List<int[]> enemy_memory_x = new ArrayList<int[]>();
+    public List<int[]> enemy_memory_y = new ArrayList<int[]>();
+
+    public List<Integer> player_memory_x = new ArrayList<Integer>();
+    public List<Integer> player_memory_y = new ArrayList<Integer>();
+
 	public Boolean game_over = false;
 
 	public Game(int size, int fences, int enemies){
@@ -28,6 +38,7 @@ public class Game{
 		this.enemy_y = new int[enemies];
         this.fence_x = new int[fences];
         this.fence_y = new int[fences];
+        this.memory = new ArrayList<int[][]>();
 
         player_x = (int)(Math.random()*(size-2)+1);
         player_y = (int)(Math.random()*(size-2)+1);
@@ -67,7 +78,11 @@ public class Game{
             grid[fence_x[i]][fence_y[i]] = 3;
         }
 
-
+        this.memory.add(grid);
+        this.player_memory_x.add(player_x);
+        this.player_memory_y.add(player_y);
+        this.enemy_memory_x.add(enemy_x);
+        this.enemy_memory_y.add(enemy_y);
 	}
 	
     public int getFences(){
@@ -76,6 +91,31 @@ public class Game{
       
     public int setFences(){
       	return fences;
+    }
+
+    public void Undo(){
+        //try{
+            System.out.println("memory:" + memory.size());
+            memory.remove(memory.size()-1);
+            player_memory_x.remove(player_memory_x.size()-1);
+            //memory.remove(memory.size()-1);
+            player_memory_y.remove(player_memory_y.size()-1);
+            enemy_memory_x.remove(enemy_memory_x.size()-1);
+            enemy_memory_y.remove(enemy_memory_y.size()-1);
+
+            System.out.println("new memory:" + memory.size());
+            System.out.println(player_x + " " + player_y);
+            grid = memory.get(memory.size()-1);
+            player_x = player_memory_x.get(player_memory_x.size()-1);
+            player_y = player_memory_y.get(player_memory_y.size()-1);
+            enemy_x = enemy_memory_x.get(enemy_memory_x.size()-1);
+            enemy_y = enemy_memory_y.get(enemy_memory_y.size()-1);
+            //grid = memory.get(memory.size()-1);
+
+            System.out.println(player_x + " " + player_y);
+        /*} catch(Exception e){
+
+        }*/
     }
 
 	public void Update(int movex, int movey){
@@ -127,5 +167,11 @@ public class Game{
 		}
 
         grid = newgrid;
+
+        memory.add(grid);
+        player_memory_x.add(player_x);
+        player_memory_y.add(player_y);
+        enemy_memory_x.add(enemy_x);
+        enemy_memory_y.add(enemy_y);
 	}
 }

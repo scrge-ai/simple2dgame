@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 /*class Listener implements KeyListener{
 
@@ -14,10 +15,10 @@ import java.io.IOException;
 
 public class Main extends JPanel implements KeyListener{
    int sqSize = 50;
-   int size = 12;
-   int enemies = 12;
-   int fences = 12;
-   Game game = new Game(size, enemies, fences);
+   static int enemies = 12;
+   static int fences = 12;
+   static int size = 12;
+   static Game game;
    static Main  mainPanel = new Main();
    JLabel label;
 
@@ -97,8 +98,12 @@ public class Main extends JPanel implements KeyListener{
          repaint();
       }
 
-      if(e.getKeyCode() == 82){
+      if(e.getKeyCode() == 82){ //r
          game = new Game(size, enemies, fences);
+      }
+
+      if(e.getKeyCode() == 85){ //u
+         game.Undo();
       }
    }
 
@@ -145,7 +150,7 @@ public class Main extends JPanel implements KeyListener{
    @Override
    public Dimension getPreferredSize() {
       // so that our GUI is big enough
-      return new Dimension(600, 600);
+      return new Dimension(50*size, 50*size);
    }
 
    // create the GUI explicitly on the Swing event thread
@@ -159,6 +164,14 @@ public class Main extends JPanel implements KeyListener{
    }
 
    public static void main(String[] args) {;
+      Scanner input = new Scanner(System.in);
+      size = input.nextInt();
+      //Scanner input = new Scanner(System.in);
+      enemies = input.nextInt();
+      //Scanner input = new Scanner(System.in);
+      fences = input.nextInt();
+      game = new Game(size, enemies, fences);
+      
       SwingUtilities.invokeLater(new Runnable() {
          public void run() {
             createAndShowGui();
