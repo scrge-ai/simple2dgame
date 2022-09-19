@@ -108,6 +108,8 @@ public class Game{
             grid = memory.get(memory.size()-1);
             player_x = player_memory_x.get(player_memory_x.size()-1);
             player_y = player_memory_y.get(player_memory_y.size()-1);
+
+            //int[] newx = new int[enemy_x.length];
             enemy_x = enemy_memory_x.get(enemy_memory_x.size()-1);
             enemy_y = enemy_memory_y.get(enemy_memory_y.size()-1);
             //grid = memory.get(memory.size()-1);
