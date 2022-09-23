@@ -114,6 +114,7 @@ public class Main extends JPanel implements KeyListener{
    @Override
    protected void paintComponent(Graphics g){
       super.paintComponent(g);
+      //System.out.println("alsdnf");
       g.setColor(new Color(255, 255, 255));
       g.drawRect(0, 0, 600, 600);
       for(int i = 0; i < size; i++){
@@ -139,7 +140,7 @@ public class Main extends JPanel implements KeyListener{
 
       if(game.game_over){
          g.setColor(new Color(255, 0, 0));
-         g.fillRect(0, 0, 600, 600);
+         g.fillRect(0, 0, sqSize*size, sqSize*size);
          g.setColor(new Color(0, 0, 0));
          g.drawString("GAME OVER", 200, 200);
       }
@@ -165,11 +166,15 @@ public class Main extends JPanel implements KeyListener{
 
    public static void main(String[] args) {;
       Scanner input = new Scanner(System.in);
+      System.out.println("size: ");
       size = input.nextInt();
       //Scanner input = new Scanner(System.in);
+      System.out.println("enemies: ");
       enemies = input.nextInt();
       //Scanner input = new Scanner(System.in);
+      System.out.println("fences: ");
       fences = input.nextInt();
+      
       game = new Game(size, enemies, fences);
       
       SwingUtilities.invokeLater(new Runnable() {

@@ -114,6 +114,15 @@ public class Game{
             enemy_y = enemy_memory_y.get(enemy_memory_y.size()-1);
             //grid = memory.get(memory.size()-1);
 
+            for(int i = 0; i < enemy_x.length; i++){
+                System.out.print(enemy_x[i] + " ");
+            }
+            System.out.println();
+            for(int i = 0; i < enemy_memory_x.get(enemy_memory_x.size()-1).length; i++){
+                System.out.print(enemy_memory_x.get(enemy_memory_x.size()-1)[i] + " ");
+            }
+            System.out.println();
+
             System.out.println(player_x + " " + player_y);
         /*} catch(Exception e){
 
@@ -173,7 +182,15 @@ public class Game{
         memory.add(grid);
         player_memory_x.add(player_x);
         player_memory_y.add(player_y);
-        enemy_memory_x.add(enemy_x);
-        enemy_memory_y.add(enemy_y);
+
+        int[] add_x = new int[enemy_x.length];
+        int[] add_y = new int[enemy_y.length];
+        for(int i = 0; i < enemy_x.length; i++){
+            add_x[i] = enemy_x[i];
+            add_y[i] = enemy_y[i];
+        }
+        
+        enemy_memory_x.add(add_x);
+        enemy_memory_y.add(add_y);
 	}
 }

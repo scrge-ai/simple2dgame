@@ -23,13 +23,7 @@ public class KeyListenerTester extends JFrame implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("Right key typed");
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            System.out.println("Left key typed");
-        }
+        System.out.println("asdfasdfasdf");
 
     }
 
