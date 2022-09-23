@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /*class Listener implements KeyListener{
-
 }*/
 
 public class Main extends JPanel implements KeyListener{
@@ -19,7 +18,9 @@ public class Main extends JPanel implements KeyListener{
    static int fences = 12;
    static int size = 12;
    static Game game;
+	static int replayFrame = 0;
    static Main  mainPanel = new Main();
+	static Boolean replaying = false;
    JLabel label;
 
    Image player;
@@ -111,14 +112,56 @@ public class Main extends JPanel implements KeyListener{
          game.Undo();
          repaint();
       }
+
+	   if(e.getKeyCode() == 32){
+		   replaying = !replaying;
+         replayFrame = 0;
+	   }
+
+	   if(replaying){
+		   if(e.getKeyCode() == 39){
+			   replayFrame++;
+            repaint();
+		   } else if(e.getKeyCode() == 37){
+			   replayFrame--;
+            repaint();
+		   }
+	   }
    }
 
    public void keyReleased(KeyEvent e){
       
    }
+	protected void drawReplaying(Graphics g){
+		super.paintComponent(g);
+	      g.setColor(new Color(255, 255, 255));
+	      g.drawRect(0, 0, 600, 600);
 
-   @Override
-   protected void paintComponent(Graphics g){
+		int[][] frame = game.DrawMemory(replayFrame);
+ 		for(int i = 0; i < size; i++){
+	        for(int j = 0; j < size; j++){
+	            if(frame[i][j] == 0){
+	                g.setColor(new Color(0, 0, 0));
+	                g.drawRect(i*sqSize, j*sqSize, sqSize, sqSize);
+	            } else if(frame[i][j] == 1){
+	                g.setColor(new Color(0, 255, 0));
+	                //g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
+	                g.drawImage(player, i*sqSize, j*sqSize, this);
+	            } else if(frame[i][j] == 2){
+	                g.setColor(new Color(255, 0, 0));
+	                //g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
+	                g.drawImage(enemy, i*sqSize, j*sqSize, this);
+	            } else if(frame[i][j] == 3){
+	                g.setColor(new Color(0, 0, 0));
+	                //g.fillRect(i*sqSize, j*sqSize, sqSize, sqSize);
+	                g.drawImage(fence, i*sqSize, j*sqSize, this);
+	            }
+	        }
+		}
+		
+	}
+	
+	protected void drawPlaying(Graphics g){
       super.paintComponent(g);
       //System.out.println("alsdnf");
       g.setColor(new Color(255, 255, 255));
@@ -142,7 +185,7 @@ public class Main extends JPanel implements KeyListener{
                 g.drawImage(fence, i*sqSize, j*sqSize, this);
             }
         }
-      }
+	}
 
 	  int xiaopingguo = 0;
 	  for(int i = 0; i < size; i++){
@@ -177,6 +220,15 @@ public class Main extends JPanel implements KeyListener{
    }
 
    @Override
+   protected void paintComponent(Graphics g){
+		if(!replaying){
+			drawPlaying(g);
+		} else{
+			drawReplaying(g);
+		}
+      }
+
+   @Override
    public Dimension getPreferredSize() {
       // so that our GUI is big enough
       return new Dimension(50*size, 50*size);
@@ -208,7 +260,7 @@ public class Main extends JPanel implements KeyListener{
       SwingUtilities.invokeLater(new Runnable() {
          public void run() {
             createAndShowGui();
-         }
+         }                     
       });
    }
 }
