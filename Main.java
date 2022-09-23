@@ -116,6 +116,7 @@ public class Main extends JPanel implements KeyListener{
 	   if(e.getKeyCode() == 32){
 		   replaying = !replaying;
          replayFrame = 0;
+         repaint();
 	   }
 
 	   if(replaying){
