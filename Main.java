@@ -104,6 +104,7 @@ public class Main extends JPanel implements KeyListener{
 
       if(e.getKeyCode() == 85){ //u
          game.Undo();
+         repaint();
       }
    }
 
@@ -143,7 +144,12 @@ public class Main extends JPanel implements KeyListener{
          g.fillRect(0, 0, sqSize*size, sqSize*size);
          g.setColor(new Color(0, 0, 0));
          g.drawString("GAME OVER", 200, 200);
-      }
+      } /*else if(game.winThing){
+         g.setColor(new Color(255, 0, 0));
+         g.fillRect(0, 0, sqSize*size, sqSize*size);
+         g.setColor(new Color(0, 0, 0));
+         g.drawString("YOU WIN", 200, 200);
+      }*/
       //g.drawRect(10, 10, 100, 100);
       repaint();
    }

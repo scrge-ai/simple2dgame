@@ -7,6 +7,8 @@ public class Game{
 	
     public int[][] startgrid;
 	public int[][] grid;
+
+
 	
     public int[] enemy_x;
     public int[] enemy_y;
@@ -26,19 +28,19 @@ public class Game{
     public List<Integer> player_memory_y = new ArrayList<Integer>();
 
 	public Boolean game_over = false;
+  public int winThing = 0;
 
 	public Game(int size, int fences, int enemies){
         this.fences = fences;
         this.enemies = enemies;
         this.size = size;
 
-		this.grid = new int[size][size];
         this.startgrid = new int[size][size];
+        this.grid = new int[size][size];
     	this.enemy_x = new int[enemies];
 		this.enemy_y = new int[enemies];
         this.fence_x = new int[fences];
         this.fence_y = new int[fences];
-        this.memory = new ArrayList<int[][]>();
 
         player_x = (int)(Math.random()*(size-2)+1);
         player_y = (int)(Math.random()*(size-2)+1);
@@ -78,11 +80,13 @@ public class Game{
             grid[fence_x[i]][fence_y[i]] = 3;
         }
 
-        this.memory.add(grid);
+        int[] memx = enemy_x.clone();
+        int[] memy = enemy_y.clone();
+
+        this.enemy_memory_x.add(memx);
+        this.enemy_memory_y.add(memy);
         this.player_memory_x.add(player_x);
         this.player_memory_y.add(player_y);
-        this.enemy_memory_x.add(enemy_x);
-        this.enemy_memory_y.add(enemy_y);
 	}
 	
     public int getFences(){
@@ -94,39 +98,33 @@ public class Game{
     }
 
     public void Undo(){
-        //try{
-            System.out.println("memory:" + memory.size());
-            memory.remove(memory.size()-1);
-            player_memory_x.remove(player_memory_x.size()-1);
-            //memory.remove(memory.size()-1);
-            player_memory_y.remove(player_memory_y.size()-1);
-            enemy_memory_x.remove(enemy_memory_x.size()-1);
-            enemy_memory_y.remove(enemy_memory_y.size()-1);
 
-            System.out.println("new memory:" + memory.size());
-            System.out.println(player_x + " " + player_y);
-            grid = memory.get(memory.size()-1);
-            player_x = player_memory_x.get(player_memory_x.size()-1);
-            player_y = player_memory_y.get(player_memory_y.size()-1);
+        enemy_memory_x.remove(enemy_memory_x.size()-1);
+        enemy_memory_y.remove(enemy_memory_y.size()-1);
+        player_memory_x.remove(player_memory_x.size()-1);
+        player_memory_y.remove(player_memory_y.size()-1);
+        System.out.println("size: " + enemy_memory_x.size());
 
-            //int[] newx = new int[enemy_x.length];
-            enemy_x = enemy_memory_x.get(enemy_memory_x.size()-1);
-            enemy_y = enemy_memory_y.get(enemy_memory_y.size()-1);
-            //grid = memory.get(memory.size()-1);
+        enemy_x = enemy_memory_x.get(enemy_memory_x.size()-1).clone();
+        enemy_y = enemy_memory_y.get(enemy_memory_y.size()-1).clone();
+        player_x = player_memory_x.get(player_memory_x.size()-1);
+        player_y = player_memory_y.get(player_memory_y.size()-1);
 
-            for(int i = 0; i < enemy_x.length; i++){
-                System.out.print(enemy_x[i] + " ");
+        int[][] newgrid = new int[grid.length][grid.length];
+        //System.out.println("size: " + 12);
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid.length; j++){
+                newgrid[i][j] = startgrid[i][j];
+                //System.out.print(newgrid[i][j]);
             }
-            System.out.println();
-            for(int i = 0; i < enemy_memory_x.get(enemy_memory_x.size()-1).length; i++){
-                System.out.print(enemy_memory_x.get(enemy_memory_x.size()-1)[i] + " ");
-            }
-            System.out.println();
-
-            System.out.println(player_x + " " + player_y);
-        /*} catch(Exception e){
-
-        }*/
+            //System.out.println();
+        }
+        
+        for(int i = 0; i < enemy_x.length; i++){
+            if(enemy_x[i] >= 0 && enemy_y[i] >= 0) newgrid[enemy_x[i]][enemy_y[i]] = 2;
+        }
+        newgrid[player_x][player_y] = 1;
+        grid = newgrid;
     }
 
 	public void Update(int movex, int movey){
@@ -134,7 +132,7 @@ public class Game{
         player_y += movey;
 
         int[][] newgrid = new int[grid.length][grid.length];
-        System.out.println("size: " + 12);
+        //System.out.println("size: " + 12);
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid.length; j++){
                 newgrid[i][j] = startgrid[i][j];
@@ -164,10 +162,18 @@ public class Game{
                 if(startgrid[enemy_x[i]][enemy_y[i]] == 3){
                     enemy_x[i] = -1;
                     enemy_y[i] = -1;
+//int winThing = winThing +1;
+                
+
+
                 } else{
-					newgrid[enemy_x[i]][enemy_y[i]] = 2;
-				}
-            }
+					          newgrid[enemy_x[i]][enemy_y[i]] = 2;
+				              }
+                if (startgrid == grid){
+                  int winThing = 1;
+                  
+                }
+           }
 		}
 
         if(newgrid[player_x][player_y] == 2 || newgrid[player_x][player_y] == 3){
@@ -178,19 +184,12 @@ public class Game{
 		}
 
         grid = newgrid;
+        int[] memx = enemy_x.clone();
+        int[] memy = enemy_y.clone();
 
-        memory.add(grid);
-        player_memory_x.add(player_x);
-        player_memory_y.add(player_y);
-
-        int[] add_x = new int[enemy_x.length];
-        int[] add_y = new int[enemy_y.length];
-        for(int i = 0; i < enemy_x.length; i++){
-            add_x[i] = enemy_x[i];
-            add_y[i] = enemy_y[i];
-        }
-        
-        enemy_memory_x.add(add_x);
-        enemy_memory_y.add(add_y);
+        this.enemy_memory_x.add(memx);
+        this.enemy_memory_y.add(memy);
+        this.player_memory_x.add(player_x);
+        this.player_memory_y.add(player_y);
 	}
 }
