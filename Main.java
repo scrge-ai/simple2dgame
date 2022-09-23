@@ -139,6 +139,23 @@ public class Main extends JPanel implements KeyListener{
         }
       }
 
+	  int xiaopingguo = 0;
+	  for(int i = 0; i < size; i++){
+	    for (int j = 0; j < size; j++) {
+	        if (game.grid[i][j] != game.startgrid[i][j]) {
+	          //g.setColor(new Color(0, 0, 0));
+	          //g.drawRect(i * sqSize, j * sqSize, sqSize, sqSize);
+	        xiaopingguo = xiaopingguo + 1;
+	        }
+		}
+	  }
+    if (xiaopingguo <= 1){
+    g.setColor(new Color(0, 255, 0));
+    g.fillRect(0, 0, sqSize*size, sqSize*size);
+    g.setColor(new Color(0, 0, 0));
+    g.drawString("YOU WIN", 200, 200);
+    }
+
       if(game.game_over){
          g.setColor(new Color(255, 0, 0));
          g.fillRect(0, 0, sqSize*size, sqSize*size);
