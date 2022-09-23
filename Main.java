@@ -98,6 +98,11 @@ public class Main extends JPanel implements KeyListener{
          repaint();
       }
 
+      if(e.getKeyCode() == 74){
+         game.Jump();
+         repaint();
+      }
+
       if(e.getKeyCode() == 82){ //r
          game = new Game(size, enemies, fences);
       }

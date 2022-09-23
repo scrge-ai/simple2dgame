@@ -167,7 +167,7 @@ public class Game{
 
 
                 } else{
-					          newgrid[enemy_x[i]][enemy_y[i]] = 2;
+					newgrid[enemy_x[i]][enemy_y[i]] = 2;
 				              }
                 if (startgrid == grid){
                   int winThing = 1;
@@ -192,4 +192,10 @@ public class Game{
         this.player_memory_x.add(player_x);
         this.player_memory_y.add(player_y);
 	}
+
+    public void Jump(){
+        player_x = (int)(Math.random()*(size-2)+1);
+        player_y = (int)(Math.random()*(size-2)+1);   
+        Update(0, 0);
+    }
 }
